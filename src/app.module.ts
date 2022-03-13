@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
-import { Connection } from 'typeorm';
+import { DiscountsModule } from './discounts/discounts.module';
+import { SalesModule } from './sales/sales.module';
+import { PurseModule } from './purse/purse.module';
 
 @Module({
   imports: [
@@ -9,16 +11,18 @@ import { Connection } from 'typeorm';
       type: 'postgres',
       host: 'localhost',
       port: 5432,
-      username: 'admin',
-      password: 'password',
+      username: 'aleksandrsafanov',
+      password: 'developer228',
       database: 'dental',
       entities: ["dist/**/*.entity{.ts,.js}"],
       synchronize: true,
     }),
-    UserModule],
+    UserModule,
+    DiscountsModule,
+    SalesModule,
+    PurseModule
+  ],
   controllers: [],
   providers: [],
 })
-export class AppModule {
-  constructor(private connection: Connection) {}
-}
+export class AppModule {}

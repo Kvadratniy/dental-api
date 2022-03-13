@@ -2,6 +2,10 @@
 logs
 *.log
 npm-debug.log*
+/db-data
+/dist
+/pgadmin
+/pgdata
 
 # Runtime data
 pids
