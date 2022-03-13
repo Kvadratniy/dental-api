@@ -1,29 +1,27 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 
-import { User } from '../entities/user.entity';
+import { Role } from './../entities/rol.entity';
 
 @Injectable()
-export class UserService {
+export class RolesService {
 
-  private users: User[] = [
+  private roles: Role[] = [
     {
       id: 1,
-      email: 'user1@mail.com',
-      password: '124'
+      name: 'Role 1',
     },
     {
-      id: 1,
-      email: 'user1@mail.com',
-      password: '124'
+      id: 2,
+      name: 'Role 2',
     },
   ];
 
   findAll() {
-    return this.users;
+    return this.roles;
   }
 
   findOne(id: string) {
-    const product = this.users.find(item => item.id === +id);
+    const product = this.roles.find(item => item.id === +id);
     if (!product) {
       throw new NotFoundException(`Product #${id} not found`);
     }
@@ -31,7 +29,7 @@ export class UserService {
   }
 
   create(data: any) {
-    this.users.push(data);
+    this.roles.push(data);
     return data;
   }
 
@@ -41,9 +39,9 @@ export class UserService {
   }
 
   remove(id: string) {
-    const productIndex = this.users.findIndex(item => item.id === +id);
+    const productIndex = this.roles.findIndex(item => item.id === +id);
     if (productIndex >= 0) {
-      this.users.splice(productIndex, 1);
+      this.roles.splice(productIndex, 1);
     }
   }
 }

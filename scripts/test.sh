@@ -1,0 +1,1 @@
+docker run --rm --name dental-pgdocker -e POSTGRES_PASSWORD=password -e POSTGRES_USER=admin -e POSTGRES_DB=dental -d -p 5532:5532 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data postgres
