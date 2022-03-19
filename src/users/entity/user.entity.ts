@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, ManyToMany, BaseEntity, OneToMany } from 'typeorm';
 // import { Discount } from '../../discounts/entities/discount.entity';
 import { Purse } from '../../purse/entities/purse.entity';
+import { Discount } from '../../discounts/entities/discount.entity';
 
 export enum UserRole {
   SUPERUSER = "superuser",
@@ -11,8 +12,7 @@ export enum UserRole {
 }
 
 @Entity()
-export class User {
-
+export class User extends BaseEntity {
   @ApiProperty({ example: '1', description: 'Уникальный ииденификатор'})
   @PrimaryGeneratedColumn()
   id: number;
@@ -45,4 +45,10 @@ export class User {
   @JoinColumn()
   purse: Purse;
 
+  @ManyToMany(() => Discount)
+  @JoinColumn()
+  discounts: Discount;
+
+  @OneToMany(() => Discount, (discount) => discount.creator)
+  createdDiscounts: Discount[];
 }

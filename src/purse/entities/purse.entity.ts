@@ -1,8 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, BaseEntity } from 'typeorm';
 import { User } from '../../users/entity/user.entity';
 
 @Entity()
-export class Purse {
+export class Purse extends BaseEntity {
 
   @PrimaryGeneratedColumn()
   id: number;

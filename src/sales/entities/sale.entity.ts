@@ -1,8 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, BaseEntity } from 'typeorm';
 import { User } from '../../users/entity/user.entity';
 
 @Entity()
-export class Sale {
+export class Sale extends BaseEntity {
 
   @PrimaryGeneratedColumn()
   id: number;
@@ -23,5 +23,4 @@ export class Sale {
 
   @Column()
   discount: string;
-
 }

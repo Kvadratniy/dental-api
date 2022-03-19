@@ -47,4 +47,9 @@ export class AuthService {
 
     throw new UnauthorizedException({ message: 'Не корректный email или пароль'})
   }
+
+  // async getCurrentUser() {
+  //   this.jwtService.decode()
+  //   this.userService.findOne();
+  // }
 }

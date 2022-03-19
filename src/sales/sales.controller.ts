@@ -8,12 +8,12 @@ export class SalesController {
   ) {}
 
   @Get()
-  getAll(){
+  getAllSales() {
     return this.salesService.getAllSales();
   }
 
   @Post()
-  createUser(@Body() body: any) {
+  createSale(@Body() body: any) {
     return this.salesService.createSale(body);
   }
 
