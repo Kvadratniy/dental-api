@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { PurseService } from './services/purse.service';
-import { PurseController } from './controllers/purse.controller';
+import { PurseService } from './purse.service';
+import { PurseController } from './purse.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Purse } from './entities/purse.entity'
 
@@ -10,6 +10,10 @@ import { Purse } from './entities/purse.entity'
   ],
   providers: [PurseService],
   controllers: [PurseController],
-  exports: [PurseService]
+  exports: [
+    PurseService
+  ]
 })
+
+// Кошелек пользователя
 export class PurseModule {}

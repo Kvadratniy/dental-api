@@ -1,6 +1,6 @@
 import { Controller, Get, Param, Query, Post, Body, Put, Delete } from '@nestjs/common';
 
-import { PurseService } from '../services/purse.service';
+import { PurseService } from './purse.service';
 
 @Controller('api/purse')
 export class PurseController {

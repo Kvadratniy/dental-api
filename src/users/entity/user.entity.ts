@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from 'typeorm';
 // import { Discount } from '../../discounts/entities/discount.entity';
-import { Purse } from '../../purse/entities/purse.entity'
+import { Purse } from '../../purse/entities/purse.entity';
 
 export enum UserRole {
   SUPERUSER = "superuser",
