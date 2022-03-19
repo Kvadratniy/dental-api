@@ -6,6 +6,7 @@ import { PurseModule } from './purse/purse.module';
 import { ConfigModule } from '@nestjs/config';
 import { UsersController } from './users/users.controller';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   controllers: [UsersController],
@@ -27,7 +28,8 @@ import { UsersModule } from './users/users.module';
     UsersModule,
     DiscountsModule,
     SalesModule,
-    PurseModule
+    PurseModule,
+    AuthModule
   ],
 })
 

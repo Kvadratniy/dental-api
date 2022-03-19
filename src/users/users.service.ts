@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entity/user.entity';
 import { CreateUserDto } from '../users/dto/create-user.dto';
-// import { PurseService } from '../purse/purse.service';
+import { PurseService } from '../purse/purse.service';
 
 
 @Injectable()
@@ -11,7 +11,7 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
-    // private purseModule: PurseService
+    private purseModule: PurseService
   ) {}
 
   getAllUsers(): Promise<User[]> {
@@ -34,17 +34,21 @@ export class UsersService {
 
   // Создание кошелька пользователся
   createPurse(user: User) {
-    // return this.purseModule.createPurse(user);
+    // return this.purseModule.createPurse(user);{
+  }
+
+  getUserByEmail(email: string) {
+    return this.usersRepository.findOne({
+      where: {
+        email,
+      }
+    });
   }
 
   async createUser(dto: CreateUserDto) {
-    let user = this.usersRepository.create(dto);
-    const valid = await this.isEmailUniq(user.email);
-    if (!valid) return 'Пользователь с таким email уже зарегистрирован';
-
-    // Создание пользователя
-    user = await this.usersRepository.save(user);
-    // this.createPurse(user);
-    return this.usersRepository.save(user);
+    const user = this.usersRepository.create(dto);
+    const newUser = await this.usersRepository.save(user);
+    this.purseModule.createPurse(newUser);
+    return newUser;
   }
 }
