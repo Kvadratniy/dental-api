@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Purse } from './entities/purse.entity';
 import { User } from '../users/entity/user.entity';
+import { Sale } from 'src/sales/entities/sale.entity';
 
 @Injectable()
 export class PurseService {
@@ -15,5 +16,15 @@ export class PurseService {
     purse.user = user;
     const newPurse = this.repository.create(purse);
     return this.repository.save(newPurse);
+  }
+
+  async addToBalance(sale: Sale) {
+    const purse = await this.repository.findOne({
+      where: {
+        id: sale.responsibleManager.id,
+      }
+    });
+    purse.balance = purse.balance + (sale.total * (sale.discount.sale/100))
+    return this.repository.save(purse);
   }
 }

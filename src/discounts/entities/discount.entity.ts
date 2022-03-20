@@ -1,6 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne, JoinColumn, BaseEntity } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne, JoinColumn, BaseEntity, JoinTable } from 'typeorm';
 import { User } from '../../users/entity/user.entity';
-
 
 @Entity()
 export class Discount extends BaseEntity {
@@ -8,7 +7,7 @@ export class Discount extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User, (user) => user.createdDiscounts)
+  @ManyToOne(() => User)
   @JoinColumn()
   creator: User;
 
@@ -19,9 +18,9 @@ export class Discount extends BaseEntity {
   endDate: Date;
 
   @Column()
-  sale: string;
+  sale: number;
 
-  @ManyToMany(type => User, user => user.discounts)
+  @ManyToMany(() => User, (user) => user.discounts)
+  @JoinTable()
   subscribers: User[];
-
 }

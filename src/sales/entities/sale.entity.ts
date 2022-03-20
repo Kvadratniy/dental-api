@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, BaseEntity } from 'typeorm';
+import { Discount } from 'src/discounts/entities/discount.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, BaseEntity, ManyToOne } from 'typeorm';
 import { User } from '../../users/entity/user.entity';
 
 @Entity()
@@ -7,7 +8,7 @@ export class Sale extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne(() => User)
+  @ManyToOne(() => User)
   @JoinColumn()
   creator: string;
 
@@ -17,10 +18,11 @@ export class Sale extends BaseEntity {
   @Column()
   total: number;
 
-  @OneToOne(() => User)
+  @ManyToOne(() => User)
   @JoinColumn()
-  responsibleManager: string;
+  responsibleManager: User;
 
-  @Column()
-  discount: string;
+  @ManyToOne(() => Discount)
+  @JoinColumn()
+  discount: Discount;
 }

@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, ManyToMany, BaseEntity, OneToMany } from 'typeorm';
-// import { Discount } from '../../discounts/entities/discount.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, ManyToMany, BaseEntity, OneToMany, JoinTable } from 'typeorm';
 import { Purse } from '../../purse/entities/purse.entity';
 import { Discount } from '../../discounts/entities/discount.entity';
 
@@ -41,14 +40,11 @@ export class User extends BaseEntity {
   })
   role: UserRole;
 
+  @ApiProperty({ example: Purse, description: 'Кошелек'})
   @OneToOne(() => Purse)
   @JoinColumn()
   purse: Purse;
 
-  @ManyToMany(() => Discount)
-  @JoinColumn()
-  discounts: Discount;
-
-  @OneToMany(() => Discount, (discount) => discount.creator)
-  createdDiscounts: Discount[];
+  @ManyToMany(() => Discount, (discount) => discount.subscribers)
+  discounts: Discount [];
 }
