@@ -17,12 +17,18 @@ export class SalesController {
   @UseGuards(JwtAuthGuard)
   @Post()
   createSale(@Body() body: any,  @Request() req: any) {
-    return this.salesService.createSale({...body, creator: req.user});
+    return this.salesService.createSale({...body, creator: req.user, creationDate: new Date(), servicesIds: [] });
   }
 
   @Get('/user')
   getUserSales() {
     return this.salesService.getUserSales()
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put('/complete')
+  completeSale(@Body() body: any){
+    return this.salesService.completeSale(body);
   }
 
 }

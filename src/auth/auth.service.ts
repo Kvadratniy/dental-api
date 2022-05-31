@@ -33,6 +33,7 @@ export class AuthService {
   }
 
   async login(userDto: CreateUserDto) {
+
     const user = await this.validateUser(userDto);
     return this.generateToken(user)
   }
@@ -40,7 +41,6 @@ export class AuthService {
   private async validateUser(userDto: CreateUserDto) {
     const user = await this.userService.getUserByEmail(userDto.email);
     const passwordEqual = await bcrypt.compare(userDto.password, user.password);
-
     if (user && passwordEqual) {
       return user;
     }

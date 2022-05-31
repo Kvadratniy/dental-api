@@ -12,7 +12,7 @@ export enum UserRole {
 
 @Entity()
 export class User extends BaseEntity {
-  @ApiProperty({ example: '1', description: 'Уникальный ииденификатор'})
+  @ApiProperty({ example: '1', description: 'Уникальный идентификатор'})
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -24,13 +24,17 @@ export class User extends BaseEntity {
   @Column()
   lastName: string;
 
-  @ApiProperty({ example: 'example@example.ru', description: 'Почтовый адреы'})
+  @ApiProperty({ example: 'example@example.ru', description: 'Почтовый адрес'})
   @Column()
   email: string;
 
   @ApiProperty({ example: '12345', description: 'Пароль'})
   @Column()
   password: string;
+
+  @ApiProperty({ example: '5', description: 'Процент вознаграждения'})
+  @Column({ default: 5 })
+  benefits: number;
 
   @ApiProperty({ example: 'manager', description: 'Роль'})
   @Column({
@@ -46,5 +50,5 @@ export class User extends BaseEntity {
   purse: Purse;
 
   @ManyToMany(() => Discount, (discount) => discount.subscribers)
-  discounts: Discount [];
+  discounts: Discount[];
 }

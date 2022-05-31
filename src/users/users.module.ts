@@ -11,7 +11,7 @@ import { PurseModule } from '../purse/purse.module';
   imports: [
     forwardRef(() => AuthModule),
     TypeOrmModule.forFeature([UserEntity]),
-    PurseModule,
+    forwardRef(() => PurseModule),
   ],
   providers: [UsersService],
   controllers: [UsersController],

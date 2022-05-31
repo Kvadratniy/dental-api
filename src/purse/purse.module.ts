@@ -1,12 +1,14 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { PurseService } from './purse.service';
 import { PurseController } from './purse.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Purse } from './entities/purse.entity'
+import { Purse } from './entities/purse.entity';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Purse])
+    forwardRef(() => AuthModule),
+    TypeOrmModule.forFeature([Purse]),
   ],
   providers: [PurseService],
   controllers: [PurseController],

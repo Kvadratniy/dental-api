@@ -8,7 +8,8 @@ import { Sale } from 'src/sales/entities/sale.entity';
 @Injectable()
 export class PurseService {
   constructor(
-    @InjectRepository(Purse) private repository: Repository<Purse>
+    @InjectRepository(Purse)
+    private repository: Repository<Purse>,
   ) {}
 
   createPurse(user: User) {
@@ -18,13 +19,13 @@ export class PurseService {
     return this.repository.save(newPurse);
   }
 
-  async addToBalance(sale: Sale) {
+  async addToBalance(sale: Sale, benefits: number) {
     const purse = await this.repository.findOne({
       where: {
         id: sale.responsibleManager.id,
       }
     });
-    purse.balance = purse.balance + (sale.total * (sale.discount.sale/100))
+    purse.balance = purse.balance + (sale.total * (benefits/100));
     return this.repository.save(purse);
   }
 }

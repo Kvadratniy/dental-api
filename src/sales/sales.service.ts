@@ -1,16 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Sale } from './entities/sale.entity';
+import { Sale, SaleStatus } from './entities/sale.entity';
 import { CreateSaleDto } from './dto/sale.dto';
 import { PurseService } from 'src/purse/purse.service';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class SalesService {
   constructor(
     @InjectRepository(Sale)
     private salesRepository: Repository<Sale>,
-    private purseModule: PurseService
+    private purseModule: PurseService,
+    private userService: UsersService,
   ) {}
 
   async createSale(dto: CreateSaleDto) {
@@ -21,7 +23,6 @@ export class SalesService {
         id: newSale.id
       }
     });
-    await this.purseModule.addToBalance(sale);
     return sale;
   }
 
@@ -38,5 +39,18 @@ export class SalesService {
         'responsibleManager': 1
       }
     });
+  }
+
+  async completeSale(body: any) {
+    const sale = await this.salesRepository.findOne(body.id,{
+      relations: ['responsibleManager', 'discount']
+    });
+    sale.total = body.total;
+    sale.servicesIds = body.servicesIds;
+    sale.status = SaleStatus.completed;
+    const resp = await this.salesRepository.save(sale);
+    const user = await this.userService.getUser(sale.responsibleManager.id.toString());
+    await this.purseModule.addToBalance(sale, user.benefits);
+    return resp;
   }
 }

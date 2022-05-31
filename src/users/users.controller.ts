@@ -1,6 +1,7 @@
 import { Controller, Get, Param, Request, Post, Body, Put, UseGuards, Query } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guards';
+import { Discount } from 'src/discounts/entities/discount.entity';
 import { User } from './entity/user.entity';
 import { UsersService } from './users.service';
 // import { User } from './entity/user';
@@ -27,6 +28,29 @@ export class UsersController {
     return this.usersService.getUsers(query.ids);
   }
 
+  @ApiOperation({ summary: 'Текущий пользователь'})
+  @ApiResponse({ status: 200, type: User})
+  @UseGuards(JwtAuthGuard)
+  @Get('/current')
+  getCurrentUser(@Request() req: any) {
+    return this.usersService.getUser(req.user.id);
+  }
+
+  @ApiOperation({ summary: 'Скидки пользователя по ид'})
+  @UseGuards(JwtAuthGuard)
+  @Get('/discounts/:id')
+  getUserDiscounts(@Param('id') id: string) {
+    return this.usersService.getUserDiscounts(id);
+  }
+
+
+  @ApiOperation({ summary: 'Скидки пользователя'})
+  @UseGuards(JwtAuthGuard)
+  @Get('/discounts') 
+  getCurrentUserDiscounts(@Request() req: any) {
+    return this.usersService.getUserDiscounts(req.user.id);
+  }
+
   @UseGuards(JwtAuthGuard)
   @Get(':id')
   getUser(@Param('id') id: string) {
@@ -40,19 +64,4 @@ export class UsersController {
   createUser(@Body() body: any) {
     return this.usersService.createUser(body);
   }
-
-  @ApiOperation({ summary: 'Текущий пользователь'})
-  @ApiResponse({ status: 200, type: User})
-  @UseGuards(JwtAuthGuard)
-  @Get('/current')
-  getCurrentUser(@Request() req: any) {
-    return req.user;
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Get('/discounts')
-  getUserDiscounts(@Request() req: any) {
-    return this.usersService.getUserDiscounts(req.user.id);
-  }
-
 }

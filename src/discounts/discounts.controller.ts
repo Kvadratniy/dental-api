@@ -11,14 +11,20 @@ export class DiscountsController {
     private discountsService: DiscountsService
   ) {}
 
-  @Get()
+  @ApiOperation({ summary: 'Список всех скидок'})
+  @ApiResponse({ status: 200 })
+  @UseGuards(JwtAuthGuard)
+  @Get('/all')
   findAll(){
     return this.discountsService.getAllDiscounts();
   }
 
-  @Get()
+  @ApiOperation({ summary: 'Получение скидки по идентификатору'})
+  @ApiResponse({ status: 200 })
+  @UseGuards(JwtAuthGuard)
+  @Get(':id')
   findOne(@Param('id') id: string) {
-    // return this.discountsService.
+    return this.discountsService.findOne(id);
   }
 
   @ApiOperation({ summary: 'Создание скидки'})
@@ -43,5 +49,10 @@ export class DiscountsController {
   @Put(':id/remove-sub')
   removeSubscriber(@Param('id') id: string, @Body() body: AddSubscribersDto[]) {
     return this.discountsService.removeSubscriber(id, body);
+  }
+
+  @Get('/code')
+  getQrCode() {
+    return this.discountsService.getQrCode();
   }
 }

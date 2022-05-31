@@ -4,6 +4,7 @@ import { In, Repository } from 'typeorm';
 import { User } from './entity/user.entity';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { PurseService } from '../purse/purse.service';
+import { getQrCode } from '../libs/qrcode';
 
 @Injectable()
 export class UsersService {
@@ -25,7 +26,9 @@ export class UsersService {
   }
 
   getUser(id: string) {
-    return this.usersRepository.findOne(id)
+    return this.usersRepository.findOne(id, {
+      relations: ['purse', 'discounts']
+    })
   }
 
    getUsers(ids: string) {
@@ -56,8 +59,22 @@ export class UsersService {
       where: {
         id
       },
-    })
-    return user.discounts;
+    });
+
+    const res = [];
+
+    for (const discount of user.discounts) {
+      const src = await this.getQr(id, discount);
+      res.push({
+        ...discount,
+        src,
+      })
+    }
+    return res;
+  }
+
+  getQr(id, discount) {
+    return getQrCode(`http://localhost:8080/discount?user=${id}&sale=${discount.id}`);
   }
 
   // Получить пользователя по email

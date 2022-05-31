@@ -5,6 +5,7 @@ import { Discount } from './entities/discount.entity';
 import { CreateDiscountDto } from './dto/create-discount.dto'
 import { AddSubscribersDto } from './dto/add-subscriber.dto';
 import { UsersService } from 'src/users/users.service';
+import { getQrCode } from '../libs/qrcode';
 
 @Injectable()
 export class DiscountsService {
@@ -21,7 +22,9 @@ export class DiscountsService {
   }
 
   findOne(id: string): Promise<Discount> {
-    return this.discountRepository.findOne(id);
+    return this.discountRepository.findOne(id, {
+      relations: ['creator', 'subscribers']
+    });
   }
 
   /**
@@ -69,5 +72,9 @@ export class DiscountsService {
     const subscribers = discount.subscribers.filter(({ id }) => !ids.includes(id));
     discount.subscribers = subscribers;
     return this.discountRepository.save(discount);
+  }
+
+  getQrCode() {
+    return getQrCode('https://test.com');
   }
 }
