@@ -1,10 +1,8 @@
-import { Controller, Get, Param, Request, Post, Body, Put, UseGuards, Query } from '@nestjs/common';
+import { Controller, Get, Param, Request, Post, Body, UseGuards, Query } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guards';
-import { Discount } from 'src/discounts/entities/discount.entity';
 import { User } from './entity/user.entity';
 import { UsersService } from './users.service';
-// import { User } from './entity/user';
 
 @ApiTags('Users')
 @Controller('api/user')
@@ -46,7 +44,7 @@ export class UsersController {
 
   @ApiOperation({ summary: 'Скидки пользователя'})
   @UseGuards(JwtAuthGuard)
-  @Get('/discounts') 
+  @Get('/discounts')
   getCurrentUserDiscounts(@Request() req: any) {
     return this.usersService.getUserDiscounts(req.user.id);
   }

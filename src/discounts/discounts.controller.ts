@@ -51,6 +51,7 @@ export class DiscountsController {
     return this.discountsService.removeSubscriber(id, body);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('/code')
   getQrCode() {
     return this.discountsService.getQrCode();

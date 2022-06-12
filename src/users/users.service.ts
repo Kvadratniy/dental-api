@@ -6,6 +6,8 @@ import { CreateUserDto } from '../users/dto/create-user.dto';
 import { PurseService } from '../purse/purse.service';
 import { getQrCode } from '../libs/qrcode';
 
+const host = 'https://tochiev-dc.ru/';
+
 @Injectable()
 export class UsersService {
   constructor(
@@ -74,7 +76,7 @@ export class UsersService {
   }
 
   getQr(id, discount) {
-    return getQrCode(`http://localhost:8080/discount?user=${id}&sale=${discount.id}`);
+    return getQrCode(`${host}/discount?user=${id}&sale=${discount.id}`);
   }
 
   // Получить пользователя по email

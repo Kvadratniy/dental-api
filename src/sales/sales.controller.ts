@@ -20,6 +20,7 @@ export class SalesController {
     return this.salesService.createSale({...body, creator: req.user, creationDate: new Date(), servicesIds: [] });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('/user')
   getUserSales() {
     return this.salesService.getUserSales()
