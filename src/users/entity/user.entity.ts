@@ -11,7 +11,7 @@ export enum UserRole {
 }
 
 @Entity()
-export class User extends BaseEntity {
+export class Users extends BaseEntity {
   @ApiProperty({ example: '1', description: 'Уникальный идентификатор'})
   @PrimaryGeneratedColumn()
   id: number;

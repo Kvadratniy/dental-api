@@ -1,6 +1,6 @@
 import { Discount } from 'src/discounts/entities/discount.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinColumn, BaseEntity, ManyToOne } from 'typeorm';
-import { User } from '../../users/entity/user.entity';
+import { Users } from '../../users/entity/user.entity';
 import { Service } from '../../services/entities/service.entity';
 
 export enum SaleStatus {
@@ -14,7 +14,7 @@ export class Sale extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => Users)
   @JoinColumn()
   creator: string;
 
@@ -34,9 +34,9 @@ export class Sale extends BaseEntity {
   })
   status: SaleStatus;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => Users)
   @JoinColumn()
-  responsibleManager: User;
+  responsibleManager: Users;
 
   @ManyToOne(() => Discount)
   @JoinColumn()

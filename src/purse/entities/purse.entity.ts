@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne, BaseEntity, JoinColumn } from 'typeorm';
-import { User } from '../../users/entity/user.entity';
+import { Users } from '../../users/entity/user.entity';
 
 @Entity()
 export class Purse extends BaseEntity {
@@ -10,6 +10,6 @@ export class Purse extends BaseEntity {
   @Column({default: 0})
   balance: number;
 
-  @OneToOne(() => User, user => user.purse)
-  user: User;
+  @OneToOne(() => Users, user => user.purse)
+  user: Users;
 }

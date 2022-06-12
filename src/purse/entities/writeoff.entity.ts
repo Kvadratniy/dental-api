@@ -1,7 +1,7 @@
 
 
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, BaseEntity } from 'typeorm';
-import { User } from '../../users/entity/user.entity';
+import { Users } from '../../users/entity/user.entity';
 
 @Entity()
 export class Writeoff extends BaseEntity {
@@ -15,6 +15,6 @@ export class Writeoff extends BaseEntity {
   @Column()
   amount: number;
 
-  @ManyToOne(() => User)
-  user: User;
+  @ManyToOne(() => Users)
+  user: Users;
 }

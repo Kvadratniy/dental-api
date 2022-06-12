@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
-import { User } from './entity/user.entity';
+import { Users } from './entity/user.entity';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { PurseService } from '../purse/purse.service';
 import { getQrCode } from '../libs/qrcode';
@@ -11,8 +11,8 @@ const host = 'https://tochiev-dc.ru/';
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User)
-    private usersRepository: Repository<User>,
+    @InjectRepository(Users)
+    private usersRepository: Repository<Users>,
     private purseModule: PurseService
   ) {}
 
@@ -21,7 +21,7 @@ export class UsersService {
   }
 
   // Список всех пользователей
-  getAllUsers(): Promise<User[]> {
+  getAllUsers(): Promise<Users[]> {
     return this.usersRepository.find({
       relations: ['purse', 'discounts']
     });

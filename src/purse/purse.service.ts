@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Purse } from './entities/purse.entity';
 import { Writeoff } from './entities/writeoff.entity';
-import { User } from '../users/entity/user.entity';
+import { Users } from '../users/entity/user.entity';
 import { Sale } from 'src/sales/entities/sale.entity';
 
 @Injectable()
@@ -16,7 +16,7 @@ export class PurseService {
     private writeoffRep: Repository<Writeoff>,
   ) {}
 
-  createPurse(user: User) {
+  createPurse(user: Users) {
     const purse = new Purse();
     purse.user = user;
     const newPurse = this.repository.create(purse);
@@ -33,7 +33,7 @@ export class PurseService {
     return this.repository.save(purse);
   }
 
-  async writeoffSum(user: User, amount: number, date: Date) {
+  async writeoffSum(user: Users, amount: number, date: Date) {
     const rec = new Writeoff();
     rec.amount = amount;
     rec.user = user;
